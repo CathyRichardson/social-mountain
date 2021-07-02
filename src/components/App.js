@@ -32,7 +32,7 @@ class App extends Component {
   }
 
   updatePost(id, body) {
-    axios.put(`https://practiceapi.devmountain.com/api/posts?${id}, ${body}`)
+    axios.put(`https://practiceapi.devmountain.com/api/posts?id=${id}, ${body}`)
     .then( ({data}) => {
       this.setState({posts: data})
     })
@@ -41,19 +41,27 @@ class App extends Component {
     })
   }
 
-  deletePost() {
-
+  deletePost(id) {
+    axios.delete(`https://practiceapi.devmountain.com/api/posts?id=${id}`)
+    .then( response => {
+      this.setState({ posts: response.data})
+    })
+    .catch(err => err.message)
   }
 
-  createPost() {
-
+  createPost(body) {
+    axios.post(`https://practiceapi.devmountain.com/api/posts, ${body}`)
+    .then( response => {
+      this.setState({ posts: response.data})
+    })
+    .catch(err => err.message)
   }
 
   render() {
     const { posts } = this.state;
     console.log("posts array: ", posts);
    
-    let renderPosts = posts.map(el => <Post key={el.id} text={el.text} date={el.date} updatePostFn={this.updatePost} id={el.id}/>)
+    let renderPosts = posts.map(el => <Post key={el.id} text={el.text} date={el.date} updatePostFn={this.updatePost} id={el.id} deletePostFn={this.deletePost}/>)
 
     return (
       <div className="App__parent">
@@ -61,7 +69,7 @@ class App extends Component {
 
         <section className="App__content">
 
-          <Compose />
+          <Compose  createPostFn={this.createPost}/>
           {renderPosts}
         </section>
       </div>

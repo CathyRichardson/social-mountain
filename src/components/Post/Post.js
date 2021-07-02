@@ -66,7 +66,7 @@ export default class Post extends Component {
           {/* Drop-down menu. Remember that the "showMasterMenu" variable has been destructured off of this.state */}
           <div className="Post__master-menu" style={ { display: showMasterMenu ? 'flex' : 'none' } }>
             <span onClick={ this.showEdit }>Edit</span>
-            <span>Delete</span>
+            <span onClick={ () => this.props.deletePostFn(this.props.id)}>Delete</span>
           </div>
         </div>
 
@@ -95,7 +95,7 @@ export default class Post extends Component {
             // This has been pulled off of this.state via destructuring
             editing
             ?
-              <Edit text=""
+              <Edit 
                     hideEdit={ this.hideEdit } 
                     updatePostFn={this.props.updatePostFn}
                     id={this.props.id}
