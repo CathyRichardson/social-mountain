@@ -26,42 +26,37 @@ class App extends Component {
       .then(res => {
         this.setState({ posts: res.data })
       })
-      .catch(err => {
-        err.message
-      })
+      .catch(err => err.message)
   }
 
   updatePost(id, body) {
-    axios.put(`https://practiceapi.devmountain.com/api/posts?id=${id}, ${body}`)
-    .then( ({data}) => {
-      this.setState({posts: data})
-    })
-    .catch( err => {
-      err.message
-    })
+    axios.put(`https://practiceapi.devmountain.com/api/posts?id=${id}`, { text: body })
+      .then(({ data }) => {
+        this.setState({ posts: data })
+      })
+      .catch(err => err.message)
   }
 
   deletePost(id) {
     axios.delete(`https://practiceapi.devmountain.com/api/posts?id=${id}`)
-    .then( response => {
-      this.setState({ posts: response.data})
-    })
-    .catch(err => err.message)
+      .then(response => {
+        this.setState({ posts: response.data })
+      })
+      .catch(err => err.message)
   }
 
   createPost(body) {
-    axios.post(`https://practiceapi.devmountain.com/api/posts, ${body}`)
-    .then( response => {
-      this.setState({ posts: response.data})
-    })
-    .catch(err => err.message)
+    axios.post(`https://practiceapi.devmountain.com/api/posts`, { text: body })
+      .then(response => {
+        this.setState({ posts: response.data })
+      })
+      .catch(err => err.message)
   }
 
   render() {
     const { posts } = this.state;
-    console.log("posts array: ", posts);
-   
-    let renderPosts = posts.map(el => <Post key={el.id} text={el.text} date={el.date} updatePostFn={this.updatePost} id={el.id} deletePostFn={this.deletePost}/>)
+
+    let renderPosts = posts.map(el => <Post key={el.id} text={el.text} date={el.date} updatePostFn={this.updatePost} id={el.id} deletePostFn={this.deletePost} />)
 
     return (
       <div className="App__parent">
@@ -69,7 +64,7 @@ class App extends Component {
 
         <section className="App__content">
 
-          <Compose  createPostFn={this.createPost}/>
+          <Compose createPostFn={this.createPost} />
           {renderPosts}
         </section>
       </div>
