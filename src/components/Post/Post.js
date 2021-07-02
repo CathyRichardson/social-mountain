@@ -79,7 +79,7 @@ export default class Post extends Component {
           <span className="Post__name">DevMountain</span>
           <span className="Post__handle">@DevMountain</span>
 
-          <span className="Post__date">- POST DATE GOES HERE</span>
+          <span className="Post__date">{this.props.date}</span>
         </div>
 
         {/* This is where the text goes. Notice the turnary statement. The turnary statement decides to display either the text OR the editor view
@@ -96,9 +96,12 @@ export default class Post extends Component {
             editing
             ?
               <Edit text=""
-                    hideEdit={ this.hideEdit } />
+                    hideEdit={ this.hideEdit } 
+                    updatePostFn={this.props.updatePostFn}
+                    id={this.props.id}
+                    text={this.props.text}/>
             :
-              <span className="Post__text">POST TEXT GOES HERE</span>
+              <span className="Post__text">{this.props.text}</span>
           }
         </div>
 
